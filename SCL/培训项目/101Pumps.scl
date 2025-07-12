@@ -1,0 +1,49 @@
+#pump_P101(start:="101ioMaping".P101.start,
+           stop:="101ioMaping".P101.stop,
+           rdy:="101ioMaping".P101.rdy,
+           std:="101ioMaping".P101.fault,
+           fault:="101ioMaping".P101.fault,
+           drive=>"101ioMaping".P101.drive,
+           stdword:="101ioMaping".P101.stdword);
+
+#pump_P102(start:="101ioMaping".P102.start,
+           stop:="101ioMaping".P102.stop,
+           rdy:="101ioMaping".P102.rdy,
+           std:="101ioMaping".P102.fault,
+           fault:="101ioMaping".P102.fault,
+           drive=>"101ioMaping".P102.drive,
+           stdword:="101ioMaping".P102.stdword);
+
+#pump_P103(start:="101ioMaping".P103.start,
+           stop:="101ioMaping".P103.stop,
+           rdy:="101ioMaping".P103.rdy,
+           std:="101ioMaping".P103.fault,
+           fault:="101ioMaping".P103.fault,
+           drive=>"101ioMaping".P103.drive,
+           stdword:="101ioMaping".P103.stdword);
+
+#pump_P104(start:="101ioMaping".P104.start,
+           stop:="101ioMaping".P104.stop,
+           rdy:="101ioMaping".P104.rdy,
+           std:="101ioMaping".P104.fault,
+           fault:="101ioMaping".P104.fault,
+           drive=>"101ioMaping".P104.drive,
+           stdword:="101ioMaping".P104.stdword);
+
+#pump_P105(start:="101ioMaping".P105.start,
+           stop:="101ioMaping".P105.stop,
+           rdy:="101ioMaping".P105.rdy,
+           std:="101ioMaping".P105.fault,
+           fault:="101ioMaping".P105.fault,
+           drive=>"101ioMaping".P105.drive,
+           stdword:="101ioMaping".P105.stdword);
+
+#pump_P106(start:="101ioMaping".P106.start,
+           stop:="101ioMaping".P106.stop,
+           rdy:="101ioMaping".P106.rdy,
+           std:="101ioMaping".P106.fault,
+           fault:="101ioMaping".P106.fault,
+           drive=>"101ioMaping".P106.drive,
+           stdword:="101ioMaping".P106.stdword);
+
+

@@ -17,7 +17,7 @@ conn.CursorLocation = 3 'adUseClient
 conn.Open
 
 Dim sql
-sql = "SELECT name FROM PW_User WHERE GRPI > 0"
+sql = "SELECT name FROM PW_User WHERE GRPID > 0"
 
 Dim rs
 Set rs = CreateObject("ADODB.Recordset")

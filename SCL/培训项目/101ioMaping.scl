@@ -1,0 +1,40 @@
+REGION P101 IO
+    "G0C201" := "101ioMaping".P101.rdy;
+    "G0C202" := "101ioMaping".P101.std;
+    "G0C203" := "101ioMaping".P101.fault;
+    "101ioMaping".P101.drive := "G0C401";
+END_REGION
+
+REGION P102 IO
+    "G0C204" := "101ioMaping".P102.rdy;
+    "G0C205" := "101ioMaping".P102.std;
+    "G0C206" := "101ioMaping".P102.fault;
+    "101ioMaping".P102.drive :="G0C402";
+END_REGION
+
+REGION P103 IO
+    "G0C207" := "101ioMaping".P103.rdy;
+    "G0C208" := "101ioMaping".P103.std;
+    "G0C209" := "101ioMaping".P103.fault;
+    "101ioMaping".P103.drive := "G0C403";
+END_REGION
+
+REGION P104 IO
+    "G0C210" := "101ioMaping".P104.rdy;
+    "G0C211" := "101ioMaping".P104.std;
+    "G0C212" := "101ioMaping".P104.fault;
+    "101ioMaping".P104.drive := "G0C404";
+END_REGION
+
+REGION P105 IO
+    "G0C213" := "101ioMaping".P105.rdy;
+    "G0C214" := "101ioMaping".P105.std;
+    "G0C215" := "101ioMaping".P105.fault;
+    "101ioMaping".P105.drive := "G0C405";
+END_REGION
+
+REGION P106 IO
+    "G0C216" := "101ioMaping".P106.rdy;
+    "G0C217" := "101ioMaping".P106.std;
+    "G0C218" := "101ioMaping".P106.fault;
+    "101ioMaping".P106.drive := "G0C406";
