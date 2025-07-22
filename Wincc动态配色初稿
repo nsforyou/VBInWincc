@@ -1,0 +1,222 @@
+---
+title: WinCC 动态主题配色方案报告
+date: 2025-07-22
+tags:
+  - WinCC
+  - HMI
+  - 动态主题
+  - 自动化
+  - 脚本
+author: Gemini & OpenAI & JhonPrice
+status: 已发布
+project: WinCC UI 配色系统
+category: 动态主题
+draft: false
+---
+
+# WinCC 动态主题配色方案 - 实施与部署综合报告
+
+## 📌 项目概述 (Project Overview)
+
+### 🎯 1.1 项目目标 (Objective)
+本项目旨在为西门子 WinCC HMI/SCADA 系统设计并部署一套现代化、可动态切换的界面配色方案。借鉴谷歌 Material Design 的理念，提供“亮色”与“暗色”两种核心主题，旨在提升用户体验，同时建立标准化的界面开发框架。
+
+### 🧩 1.2 核心架构 (Core Architecture)
+本方案采用基于 **“状态驱动”** 的中心化架构，核心组成包括：
+- **中心化状态管理**：使用 WinCC 内部变量集中管理所有颜色配置；
+- **全局脚本引擎**：使用 VBScript 响应主题切换请求并刷新变量；
+- **界面动态链接**：界面控件的颜色属性与变量动态绑定；
+- **用户交互触发**：按钮触发切换逻辑并调用主题更新脚本。
+
+### 🛠️ 1.3 技术栈 (Technology Stack)
+- **平台**：Siemens WinCC V7.5 SP1  
+- **技术**：WinCC 内部变量、VBScript 全局脚本、VBA 图形编辑器宏
+
+---
+
+## 🏗️ 2. 基础架构部署 (Infrastructure Deployment)
+
+### 🧱 2.1 创建内部变量 (The Foundation)
+
+建议在变量管理器中新建变量组 `TheMe`，并创建如下变量：
+
+| 名称 | 类型 | 说明 |
+|------|------|------|
+| `Theme_Color_Container` | 无符号 32 位值 | 当前容器背景色 |
+| `Theme_Color_Primary` | 无符号 32 位值 | 当前主色调 |
+| `Theme_Color_Surface` | 无符号 32 位值 | 当前界面背景色 |
+| `Theme_Color_TextOnPrimary` | 无符号 32 位值 | 主色背景上的文本色 |
+| `Theme_Color_TextOnSurface` | 无符号 32 位值 | 背景色上的文本色 |
+| `ThemeSelector` | 无符号 16 位值 | 当前主题选择 (1=亮色, 2=暗色) |
+
+---
+
+### ⚙️ 2.2 创建全局脚本模块 (Global Script Engine)
+
+将以下 VBScript 添加到“全局脚本”模块中：
+
+```vbscript
+' --- 主题切换主入口 ---
+Public Sub UpdateThemeColors(themeID)
+    Select Case themeID
+        Case 1: Call SetTheme_GoogleAI_Light()
+        Case 2: Call SetTheme_GoogleAI_Dark()
+        Case Else: Call SetTheme_GoogleAI_Light()
+    End Select
+End Sub
+
+' --- 亮色主题 ---
+Private Sub SetTheme_GoogleAI_Light()
+    HMIRuntime.Tags("Theme_Color_Primary").Write RGB(66, 133, 244)
+    HMIRuntime.Tags("Theme_Color_Surface").Write RGB(248, 249, 250)
+    HMIRuntime.Tags("Theme_Color_Container").Write RGB(210, 227, 252)
+    HMIRuntime.Tags("Theme_Color_TextOnSurface").Write RGB(31, 31, 31)
+    HMIRuntime.Tags("Theme_Color_TextOnPrimary").Write RGB(255, 255, 255)
+End Sub
+
+' --- 暗色主题 ---
+Private Sub SetTheme_GoogleAI_Dark()
+    HMIRuntime.Tags("Theme_Color_Primary").Write RGB(137, 180, 248)
+    HMIRuntime.Tags("Theme_Color_Surface").Write RGB(31, 31, 31)
+    HMIRuntime.Tags("Theme_Color_Container").Write RGB(60, 64, 67)
+    HMIRuntime.Tags("Theme_Color_TextOnSurface").Write RGB(232, 234, 237)
+    HMIRuntime.Tags("Theme_Color_TextOnPrimary").Write RGB(32, 33, 36)
+End Sub
+```
+
+---
+
+## 🎨 3. 界面集成与交互 (UI Integration and Interaction)
+
+### 🖥️ 3.1 画面初始化脚本
+
+```vbscript
+Call UpdateThemeColors(HMIRuntime.Tags("ThemeSelector").Read)
+```
+
+### 🔘 3.2 主题切换按钮脚本
+
+**亮色按钮：**
+
+```vbscript
+HMIRuntime.Tags("ThemeSelector").Value = 1
+Call UpdateThemeColors(1)
+```
+
+**暗色按钮：**
+
+```vbscript
+HMIRuntime.Tags("ThemeSelector").Value = 2
+Call UpdateThemeColors(2)
+```
+
+---
+
+## 🧠 4. VBA 自动化创建画面 (The Creator)
+
+打开画面编辑器，进入VBA。添加一个form和button在鼠标点击事件下增加下列内容。
+
+```vb
+Public Sub GenerateGoogleAIThemeScreen()
+
+    Dim COLOR_PRIMARY_STATIC, COLOR_SURFACE_STATIC, COLOR_CONTAINER_STATIC
+    Dim COLOR_TEXT_ON_SURFACE_STATIC, COLOR_TEXT_ON_PRIMARY_STATIC
+
+    COLOR_PRIMARY_STATIC = RGB(66, 133, 244)
+    COLOR_SURFACE_STATIC = RGB(248, 249, 250)
+    COLOR_CONTAINER_STATIC = RGB(210, 227, 252)
+    COLOR_TEXT_ON_SURFACE_STATIC = RGB(31, 31, 31)
+    COLOR_TEXT_ON_PRIMARY_STATIC = RGB(255, 255, 255)
+
+    Dim appGD As Object, objDocument As Document, objItem As Object, objColorTrigger As HMIVariableTrigger
+
+    Set appGD = CreateObject("grafexe.Application")
+    appGD.Visible = True
+
+    Set objDocument = appGD.Documents.Add(1)
+    With objDocument
+        .Width = 1920
+        .Height = 980
+        .GlobalColorScheme = No
+        .BackColor = COLOR_SURFACE_STATIC
+        Set objColorTrigger = .Properties("BackColor").CreateDynamic(hmiDynamicCreationTypeVariableDirect, "Theme_Color_Surface")
+        objColorTrigger.CycleType = hmiVariableCycleTypeOnChange
+    End With
+
+    Set objItem = objDocument.HMIObjects.AddHMIObject("TitleBar", "HMIRectangle")
+    With objItem
+        .Left = 0
+        .Top = 0
+        .Width = 1920
+        .Height = 60
+        .GlobalColorScheme = No
+        .BackColor = COLOR_PRIMARY_STATIC
+        Set objColorTrigger = .Properties("BackColor").CreateDynamic(hmiDynamicCreationTypeVariableDirect, "Theme_Color_Primary")
+        objColorTrigger.CycleType = hmiVariableCycleTypeOnChange
+        .BorderStyle = 0
+    End With
+
+    Set objItem = objDocument.HMIObjects.AddHMIObject("TitleText", "HMIStaticText")
+    With objItem
+        .Left = 10
+        .Top = 10
+        .Width = 400
+        .Height = 30
+        .Text = "谷歌AI动态配色方案"
+        .FONTBOLD = True
+        .FONTSIZE = 16
+        .GlobalColorScheme = No
+        .ForeColor = COLOR_TEXT_ON_PRIMARY_STATIC
+        Set objColorTrigger = .Properties("ForeColor").CreateDynamic(hmiDynamicCreationTypeVariableDirect, "Theme_Color_TextOnPrimary")
+        objColorTrigger.CycleType = hmiVariableCycleTypeOnChange
+    End With
+
+    Set objItem = objDocument.HMIObjects.AddHMIObject("ContentContainer", "HMIRectangle")
+    With objItem
+        .Left = 20
+        .Top = 70
+        .Width = 400
+        .Height = 300
+        .GlobalColorScheme = No
+        .BackColor = COLOR_CONTAINER_STATIC
+        Set objColorTrigger = .Properties("BackColor").CreateDynamic(hmiDynamicCreationTypeVariableDirect, "Theme_Color_Container")
+        objColorTrigger.CycleType = hmiVariableCycleTypeOnChange
+    End With
+
+    Set objItem = objDocument.HMIObjects.AddHMIObject("ContainerText", "HMIStaticText")
+    With objItem
+        .Left = 30
+        .Top = 80
+        .Width = 380
+        .Height = 25
+        .Text = "这是一个容器内的文本。"
+        .FONTSIZE = 12
+        .GlobalColorScheme = No
+        .ForeColor = COLOR_TEXT_ON_SURFACE_STATIC
+        Set objColorTrigger = .Properties("ForeColor").CreateDynamic(hmiDynamicCreationTypeVariableDirect, "Theme_Color_TextOnSurface")
+        objColorTrigger.CycleType = hmiVariableCycleTypeOnChange
+    End With
+
+    objDocument.SaveAs appGD.ApplicationDataPath & "Google_AI_Theme_Screen.pdl"
+    MsgBox "谷歌AI配色画面生成完毕！", vbInformation
+
+End Sub
+```
+
+---
+
+## ✅ 5. 总结与展望 (Conclusion and Outlook)
+
+本方案成功构建了一套 WinCC 上的动态 UI 配色系统，具备以下优势：
+- 模块化设计，逻辑清晰；
+- 自动化部署，减少手动错误；
+- 未来易扩展：可支持夜间模式、高对比色、护眼风格等。
+
+**建议：**
+- 建立面板库（Faceplate Library）以复用风格；
+- 封装用户设置持久化逻辑；
+- 将变量封装进结构类型，便于后续版本维护。
+
+---
+
+> 📁 推荐放入 Obsidian 目录：`WinCC/主题方案/动态配色.md`
