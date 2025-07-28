@@ -1,0 +1,75 @@
+// 电力系统单线图-完整版
+digraph Power_Grid_Diagram_Full {
+	nodesep=1 rankdir=TB ranksep=1.5 splines=ortho
+	node [fillcolor="#DAE8FC" fontname=SimHei shape=box style="rounded,filled"]
+	edge [fontname=SimHei fontsize=10]
+	source [label="220kV 电源
+(Mboudi 变电站)" fillcolor="#F8CECC" shape=cloud]
+	main_substation [label="全厂总降压变电站
+(220/35kV, 2x150MVA)"]
+	mining_35kv [label="采矿35kV变电站"]
+	processing_35kv [label="加工厂35kV变电站 (选矿)"]
+	pelletizing_35kv [label="造粒厂35kV变电站
+(2x31.5MVA)"]
+	subgraph cluster_mining {
+		rank=same
+		load_m1 [label="井下中央变电所" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m2 [label="井下301盘区变电所" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m3 [label="井下302盘区变电所" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m4 [label="东风井配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m5 [label="西风井配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m6 [label="1#主井提升机配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m7 [label="2#主井提升机配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m8 [label="副井提升机房配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m9 [label="副井交通罐提升机配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_m10 [label="潜水泵泵房地面配电室" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+	}
+	subgraph cluster_processing {
+		rank=same
+		load_p1 [label="原矿储仓配电室641" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p2 [label="筛分配电室642" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p3 [label="分解结晶变配电室643" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p4 [label="选过滤车间浮选配电室644" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p5 [label="选过滤车间过滤配电室645" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p6 [label="生活区变电所320" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p7 [label="熔炼装置变电所310" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_p8 [label="提溴装置变电所311" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+	}
+	subgraph cluster_pelletizing {
+		rank=same
+		load_g1 [label="精矿脱卤变电所315" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_g2 [label="干燥储运变电所316" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_g3 [label="陆域变电所317" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_g4 [label="盐水排海配电室318" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+		load_g5 [label="造粒车间变电所874" fillcolor="#D5E8D4" fontname=SimHei rotate=90 shape=box style=filled]
+	}
+	source -> main_substation [label="220kV 架空线路
+28.5km"]
+	main_substation -> mining_35kv [label="35kV 馈线"]
+	main_substation -> processing_35kv [label="35kV 馈线"]
+	main_substation -> pelletizing_35kv [label="35kV 架空线路
+13km"]
+	mining_35kv -> load_m1
+	mining_35kv -> load_m2
+	mining_35kv -> load_m3
+	mining_35kv -> load_m4
+	mining_35kv -> load_m5
+	mining_35kv -> load_m6
+	mining_35kv -> load_m7
+	mining_35kv -> load_m8
+	mining_35kv -> load_m9
+	mining_35kv -> load_m10
+	processing_35kv -> load_p1
+	processing_35kv -> load_p2
+	processing_35kv -> load_p3
+	processing_35kv -> load_p4
+	processing_35kv -> load_p5
+	processing_35kv -> load_p6
+	processing_35kv -> load_p7
+	processing_35kv -> load_p8
+	pelletizing_35kv -> load_g1
+	pelletizing_35kv -> load_g2
+	pelletizing_35kv -> load_g3
+	pelletizing_35kv -> load_g4
+	pelletizing_35kv -> load_g5
+}

@@ -1,0 +1,273 @@
+// 电力系统单线图-垂直文字版
+digraph Power_Grid_Diagram_Final_Vertical {
+	nodesep=0.8 rankdir=TB ranksep=1.5 splines=ortho
+	node [fillcolor="#DAE8FC" fontname=SimHei shape=box style="rounded,filled"]
+	edge [fontname=SimHei fontsize=10]
+	source [label="220kV 电源
+(Mboudi 变电站)" fillcolor="#F8CECC" shape=cloud]
+	main_substation [label="全厂总降压变电站
+(220/35kV, 2x150MVA)"]
+	mining_35kv [label="采矿35kV变电站"]
+	processing_35kv [label="加工厂35kV变电站 (选矿)"]
+	pelletizing_35kv [label="造粒厂35kV变电站
+(2x31.5MVA)"]
+	subgraph cluster_mining {
+		rank=same
+		load_m1 [label="井
+下
+中
+央
+变
+电
+所" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m2 [label="井
+下
+3
+0
+1
+盘
+区
+变
+电
+所" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m3 [label="井
+下
+3
+0
+2
+盘
+区
+变
+电
+所" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m4 [label="东
+风
+井
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m5 [label="西
+风
+井
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m6 [label="1
+#
+主
+井
+提
+升
+机
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m7 [label="2
+#
+主
+井
+提
+升
+机
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m8 [label="副
+井
+提
+升
+机
+房
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m9 [label="副
+井
+交
+通
+罐
+提
+升
+机
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_m10 [label="潜
+水
+泵
+泵
+房
+地
+面
+配
+电
+室" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+	}
+	subgraph cluster_processing {
+		rank=same
+		load_p1 [label="原
+矿
+储
+仓
+配
+电
+室
+6
+4
+1" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p2 [label="筛
+分
+配
+电
+室
+6
+4
+2" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p3 [label="分
+解
+结
+晶
+变
+配
+电
+室
+6
+4
+3" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p4 [label="选
+过
+滤
+车
+间
+浮
+选
+配
+电
+室
+6
+4
+4" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p5 [label="选
+过
+滤
+车
+间
+过
+滤
+配
+电
+室
+6
+4
+5" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p6 [label="生
+活
+区
+变
+电
+所
+3
+2
+0" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p7 [label="熔
+炼
+装
+置
+变
+电
+所
+3
+1
+0" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_p8 [label="提
+溴
+装
+置
+变
+电
+所
+3
+1
+1" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+	}
+	subgraph cluster_pelletizing {
+		rank=same
+		load_g1 [label="精
+矿
+脱
+卤
+变
+电
+所
+3
+1
+5" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_g2 [label="干
+燥
+储
+运
+变
+电
+所
+3
+1
+6" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_g3 [label="陆
+域
+变
+电
+所
+3
+1
+7" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_g4 [label="盐
+水
+排
+海
+配
+电
+室
+3
+1
+8" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+		load_g5 [label="造
+粒
+车
+间
+变
+电
+所
+8
+7
+4" fillcolor="#D5E8D4" fontname=SimHei fontsize=10 shape=box style=filled]
+	}
+	source -> main_substation [label="220kV 架空线路
+28.5km"]
+	main_substation -> mining_35kv [label="35kV 馈线"]
+	main_substation -> processing_35kv [label="35kV 馈线"]
+	main_substation -> pelletizing_35kv [label="35kV 架空线路
+13km"]
+	mining_35kv -> load_m1
+	mining_35kv -> load_m2
+	mining_35kv -> load_m3
+	mining_35kv -> load_m4
+	mining_35kv -> load_m5
+	mining_35kv -> load_m6
+	mining_35kv -> load_m7
+	mining_35kv -> load_m8
+	mining_35kv -> load_m9
+	mining_35kv -> load_m10
+	processing_35kv -> load_p1
+	processing_35kv -> load_p2
+	processing_35kv -> load_p3
+	processing_35kv -> load_p4
+	processing_35kv -> load_p5
+	processing_35kv -> load_p6
+	processing_35kv -> load_p7
+	processing_35kv -> load_p8
+	pelletizing_35kv -> load_g1
+	pelletizing_35kv -> load_g2
+	pelletizing_35kv -> load_g3
+	pelletizing_35kv -> load_g4
+	pelletizing_35kv -> load_g5
+}
